@@ -19,20 +19,23 @@ config_map = {
   'database': "CMSC408_HW8_DB_NAME"
 }
 
-cnx,config = create_db_wrapper( config_map )
+cnx, config = create_db_wrapper(config_map)
   ```
 
 
 ```{python}
 # Do a quick test of the connection and trap the errors better!
-run_sql_and_return_html(cnx, """
-select
-  table_schema, table_name, table_rows
-from
-  information_schema.tables
-where
-  table_schema in ('world_bank_data')
-""")
+from helpers import create_database_engine, run_sql_and_return_df, run_sql_and_return_html, create_db_wrapper, execute_ddl_from_file, execute_ddl
+
+# Load these variables from .env file.
+config_map = {
+  'user': "CMSC408_HW8_USER",
+  'password': "CMSC408_HW8_PASSWORD",
+  'host': "CMSC408_HW8_HOST",
+  'database': "CMSC408_HW8_DB_NAME"
+}
+
+cnx, config = create_db_wrapper(config_map)
 ```
 
 # Exercises
