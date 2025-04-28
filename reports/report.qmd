@@ -8,7 +8,6 @@ GITHUB URL:  <https://github.com/cmsc-vcu/cmsc408-sp2025-hw8-minora3>
 # Problem Background
 
 
-```{python}
 from helpers import create_database_engine, run_sql_and_return_df, run_sql_and_return_html, create_db_wrapper, execute_ddl_from_file, execute_ddl
 
 # Load these variables from .env file.
@@ -20,10 +19,9 @@ config_map = {
 }
 
 cnx, config = create_db_wrapper(config_map)
-  ```
 
 
-```{python}
+
 # Do a quick test of the connection and trap the errors better!
 from helpers import create_database_engine, run_sql_and_return_df, run_sql_and_return_html, create_db_wrapper, execute_ddl_from_file, execute_ddl
 
@@ -36,7 +34,7 @@ config_map = {
 }
 
 cnx, config = create_db_wrapper(config_map)
-```
+
 
 # Exercises
 
@@ -46,7 +44,7 @@ In the following exercises, write the SQL as requested to discover the answer.
 
 How many records are in the country table? 
 
-```{python}
+
 # How many records are in the world_bank_data.wdi_country table? There are 265 records in the table.
 # (skills: select, aggregate)
 
@@ -56,13 +54,13 @@ select
 from
   world_bank_data.wdi_country
 """)
-```
+
 
 ## Task 2
 
 Explore the first 5 records in the country table.
 
-```{python}
+
 ## write out the first 10 records and look at the columns
 ## Do you see any blanks or missing data?
 ## (skills: select, limit)
@@ -74,14 +72,13 @@ FROM
   world_bank_data.wdi_country
 LIMIT 5
 """)
-```
 
 
 ## Task 3
 
 List all non-countries.
 
-```{python}
+
 ## task 3
 ## Which records are NOT for countries, that is they're for regions or groups of countries.
 ## How can you tell? 
@@ -99,13 +96,13 @@ WHERE
 ORDER BY
   country_short_name
 """)
-```
+
 
 ## Task 4
 
 Create your own copy of WDI_Country containing just countries.
 
-```{python}
+
 ## task 4
 ## The WDI table clearly contains information for countries and non-countries
 ## using CREATE TABLE ... SELECT from WHERE syntax.
@@ -117,9 +114,9 @@ Create your own copy of WDI_Country containing just countries.
 execute_ddl(cnx,"""
 drop table if exists wdi_country;
 """)
-```
 
-```{python}
+
+
 # create table
 execute_ddl(cnx,"""
 CREATE TABLE wdi_country AS
@@ -128,15 +125,15 @@ FROM world_bank_data.wdi_country
 WHERE country_region IS NOT NULL
   AND country_id NOT LIKE 'X%';
 """)
-```
 
-```{python}
+
+
 # show number of records
 df = execute_query(cnx,"""
 SELECT COUNT(*) AS num_countries
 FROM wdi_country;
 """)
-```
+
 df
 
 
@@ -145,19 +142,19 @@ df
 According to the World Bank, in 2020 there were how many countries in the world? 
 195 Countries
 
-```{python}
+
 ## (skills: select, aggregate)
 run_sql_and_return_html(cnx,"""
 SELECT COUNT(*) AS num_countries_2020
 FROM wdi_country;
 """)
-```
+
 
 ## Task 6
 
 What are all unique values of region in the wdi_country table? 
 
-```{python}
+
 ## Let's investigate the country_region field.
 ## What is the domain of the country_region field? That is,
 ## what are the unique values found there?
@@ -169,13 +166,13 @@ SELECT DISTINCT country_region
 FROM wdi_country
 ORDER BY country_region;
 """)
-```
+
 
 ## Task 7
 
 How many countries are in each region?
 
-```{python}
+
 ## How many countries are in each region?
 ## (skills: select, aggregate, group by, order by)
 run_sql_and_return_html(cnx, """
@@ -184,13 +181,13 @@ FROM world_bank_data.wdi_country
 GROUP BY country_region
 ORDER BY country_count DESC;
 """)
-```
+
 
 ## Task 8
 
 List the country full names and regions for all countries in north america.
 
-```{python}
+
 ## List the country full names and regions for all countries in north america
 ## (skills: select, where, order by)
 
@@ -200,11 +197,10 @@ FROM world_bank_data.wdi_country
 WHERE country_region = 'North America'
 ORDER BY country_name;
 """)
-```
 
 ## Task 9
 
-```{python}
+
 ## The last World Cup soccer tournament was hosted by Qatar.
 ## What region contains Qatar?  List the region, country short name and full name
 ## (skills: select, where)
@@ -214,11 +210,11 @@ SELECT country_region, country_short_name, country_name
 FROM world_bank_data.wdi_country
 WHERE country_short_name = 'QAT';
 """)
-```
+
 
 ## Task 10
 
-```{python}
+
 ## There are two abbreviation fields in the data country_abbr and country_wb_abbr.
 ## List the country code, short name, abbr, wb_abbr and region for all the countries
 ## where the abbr and wb_abbr are different.
@@ -230,11 +226,11 @@ FROM world_bank_data.wdi_country
 WHERE country_abbr != country_wb_abbr
 ORDER BY country_short_name;
 """)
-```
+
 
 ## Task 11
 
-```{python}
+
 ## Now, let's investigate the "income category" field.
 ## List the income categories and the number of countries in each
 ## income category in descending order of most countries to least.
@@ -246,11 +242,11 @@ FROM world_bank_data.wdi_country
 GROUP BY income_category
 ORDER BY number_of_countries DESC;
 """)
-```
+
 
 ## Task 12
 
-```{python}
+
 ## Mystery task.  Looking at the table from Task 11 (anything odd?) write the
 ## next obvious query based on the results in the table.
 ## At a minimum, your query should put country short name in the first column.
@@ -262,11 +258,11 @@ SELECT country_short_name, region, income_category
 FROM world_bank_data.wdi_country
 ORDER BY country_short_name;
 """)
-```
+
 
 ## Task 13
 
-```{python}
+
 ## OK, this HAS to be an error. Let's make a assumption that the country 
 ## in question, because they are oil-rich, are "high income".  
 ## Write an update comment to correct the issue.
@@ -278,9 +274,9 @@ UPDATE wdi_country
 SET income_category = 'High income'
 WHERE country_short_name = 'COUNTRY_ABBR'; -- Replace with the actual country abbreviation
 """)
-```
 
-```{python}
+
+
 ## Now, display the country again to verify the change stuck!
 
 run_sql_and_return_html(cnx, """
@@ -289,11 +285,11 @@ SELECT country_short_name, country_full_name, income_category
 FROM wdi_country
 WHERE country_short_name = 'COUNTRY_ABBR'; -- Replace with the actual country abbreviation
 """)
-```
+
 
 ## Task 14
 
-```{python}
+
 ## Write a single query that show the number of countries in each 
 ## "Region"-"Income Group" pair.  The table should have 3 columns:
 ## region, income group, and no.of.countries.
@@ -305,11 +301,11 @@ FROM wdi_country
 GROUP BY region, income_category
 ORDER BY no_of_countries DESC;
 """)
-```
+
 
 ## Task 15
 
-```{python}
+
 ## Examine the result from task 14. It would be really cool to
 ## present the results of this table in a 2-D form, with 
 ## columns for each income category (high, upper middle, lower middle, low, other)
@@ -334,11 +330,11 @@ FROM wdi_country
 GROUP BY region
 ORDER BY region;
 """)
-```
+
 
 ## Task 16
 
-```{python}
+
 ## Wow! what a cool table!  It is very interesting to see where the money
 ## sits around the world.  Using the general approach from Task 14 above
 ## and write a query to return the single region with the most lower-income
@@ -359,11 +355,11 @@ GROUP BY region
 ORDER BY low_income_count DESC
 LIMIT 1;
 """)
-```
+
 
 ## Task 17
 
-```{python}
+
 ## Are you getting the hand of this? Good! We need to take a look at all
 ## the countries in the same region and with the same income category as
 ## the Marshall Islands.
@@ -379,11 +375,11 @@ WHERE region = (SELECT region FROM wdi_country WHERE country_code = 'MHL')
   AND income_category = (SELECT income_category FROM wdi_country WHERE country_code = 'MHL')
 ORDER BY country_short_name;
 """)
-```
+
 
 ## Task 18
 
-```{python}
+
 ## OK - let's raise the heat in the kitchen! Review the output from task 14.
 ## You'll see that some of the regions do not contain all of the income
 ## levels.  For example, the Europe & Central Asia region does not have
@@ -415,11 +411,11 @@ WHERE NOT EXISTS (
 )
 ORDER BY region, income_category;
 """)
-```
+
 
 ## Task 19
 
-```{python}
+
 ## Hot enough, yet?  Let's go for ghost-pepper HOT!  Now let's build some
 ## percentage tables.  For example, across the entire sample, what
 ## is the percentage of total countries in each income category?
@@ -448,11 +444,11 @@ FROM wdi_country c
 GROUP BY region, income_category
 ORDER BY region, income_cat;
 """)
-```
+
 
 ## Task 20
 
-```{python}
+
 ## SLAM DUNK TIME!  Using the resulting table CTEs from Task 19,
 ## print table similar to the table in Task 15, with Income group in the
 ## columns, Region in the rows and Percent of total in each cell of the table.
@@ -481,11 +477,11 @@ FROM region_income_counts
 GROUP BY region
 ORDER BY region;
 """)
-```
+
 
 ## Task 21
 
-```{python}
+
 ## ANOTHER DUNK!  Using the resulting table CTEs from Task 19,
 ## print a table listing the number, totals and percentage of countries
 ## by income category.
@@ -510,7 +506,7 @@ SELECT
 FROM income_category_counts
 ORDER BY income_cat;
 """)
-```
+
 
 
 # Reflection
