@@ -100,7 +100,7 @@ WHERE
 ORDER BY
   country_short_name
 """)
-
+```
 
 ## Task 4
 
