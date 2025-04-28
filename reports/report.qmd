@@ -20,8 +20,7 @@ config_map = {
 }
 
 cnx,config = create_db_wrapper( config_map )
-  
-```
+  ```
 
 
 ```{python}
@@ -35,7 +34,6 @@ from
 where
   table_schema in ('world_bank_data')
 """)
-
 ```
 
 # Exercises
@@ -56,7 +54,6 @@ select
 from
   world_bank_data.wdi_country
 """)
-
 ```
 
 ## Task 2
@@ -152,7 +149,6 @@ run_sql_and_return_html(cnx,"""
 SELECT COUNT(*) AS num_countries_2020
 FROM wdi_country;
 """)
-
 ```
 
 ## Task 6
@@ -171,7 +167,6 @@ SELECT DISTINCT country_region
 FROM wdi_country
 ORDER BY country_region;
 """)
-
 ```
 
 ## Task 7
@@ -187,7 +182,6 @@ FROM world_bank_data.wdi_country
 GROUP BY country_region
 ORDER BY country_count DESC;
 """)
-
 ```
 
 ## Task 8
@@ -204,8 +198,6 @@ FROM world_bank_data.wdi_country
 WHERE country_region = 'North America'
 ORDER BY country_name;
 """)
-
-
 ```
 
 ## Task 9
@@ -220,7 +212,6 @@ SELECT country_region, country_short_name, country_name
 FROM world_bank_data.wdi_country
 WHERE country_short_name = 'QAT';
 """)
-
 ```
 
 ## Task 10
@@ -237,7 +228,6 @@ FROM world_bank_data.wdi_country
 WHERE country_abbr != country_wb_abbr
 ORDER BY country_short_name;
 """)
-
 ```
 
 ## Task 11
@@ -254,7 +244,6 @@ FROM world_bank_data.wdi_country
 GROUP BY income_category
 ORDER BY number_of_countries DESC;
 """)
-
 ```
 
 ## Task 12
@@ -271,7 +260,6 @@ SELECT country_short_name, region, income_category
 FROM world_bank_data.wdi_country
 ORDER BY country_short_name;
 """)
-
 ```
 
 ## Task 13
@@ -288,8 +276,8 @@ UPDATE wdi_country
 SET income_category = 'High income'
 WHERE country_short_name = 'COUNTRY_ABBR'; -- Replace with the actual country abbreviation
 """)
-
 ```
+
 ```{python}
 ## Now, display the country again to verify the change stuck!
 
@@ -299,7 +287,6 @@ SELECT country_short_name, country_full_name, income_category
 FROM wdi_country
 WHERE country_short_name = 'COUNTRY_ABBR'; -- Replace with the actual country abbreviation
 """)
-
 ```
 
 ## Task 14
@@ -316,7 +303,6 @@ FROM wdi_country
 GROUP BY region, income_category
 ORDER BY no_of_countries DESC;
 """)
-
 ```
 
 ## Task 15
@@ -346,7 +332,6 @@ FROM wdi_country
 GROUP BY region
 ORDER BY region;
 """)
-
 ```
 
 ## Task 16
@@ -392,7 +377,6 @@ WHERE region = (SELECT region FROM wdi_country WHERE country_code = 'MHL')
   AND income_category = (SELECT income_category FROM wdi_country WHERE country_code = 'MHL')
 ORDER BY country_short_name;
 """)
-
 ```
 
 ## Task 18
@@ -429,8 +413,6 @@ WHERE NOT EXISTS (
 )
 ORDER BY region, income_category;
 """)
-
-
 ```
 
 ## Task 19
@@ -464,7 +446,6 @@ FROM wdi_country c
 GROUP BY region, income_category
 ORDER BY region, income_cat;
 """)
-
 ```
 
 ## Task 20
@@ -527,7 +508,6 @@ SELECT
 FROM income_category_counts
 ORDER BY income_cat;
 """)
-
 ```
 
 
