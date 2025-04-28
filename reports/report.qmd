@@ -25,8 +25,7 @@ cnx,config = create_db_wrapper( config_map )
 
 ```{python}
 # Do a quick test of the connection and trap the errors better!
-
-run_sql_and_return_html(cnx,"""
+run_sql_and_return_html(cnx, """
 select
   table_schema, table_name, table_rows
 from
